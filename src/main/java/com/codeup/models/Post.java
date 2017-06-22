@@ -1,3 +1,4 @@
+package com.codeup.models;
 //import org.springframework.stereotype.Controller;
 //import org.springframework.web.bind.annotation.GetMapping;
 //
@@ -8,18 +9,33 @@
 //        return title
 //    }
 //}
+import com.sun.javafx.beans.IDProperty;
+
+import javax.annotation.Generated;
+import javax.persistence.*;
 
 
-package com.codeup.models;
-
+@Entity
+@Table(name="ad_db")
 public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable=false, length =100)
     private String title;
+
+    @Column(nullable = false)
     private String body;
 
     public Post(String title, String body) {
         this.title = title;
         this.body = body;
+    }
+
+    public Post(){
+
     }
 
     public String getTitle() {return title;}
