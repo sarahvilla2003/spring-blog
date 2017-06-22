@@ -1,37 +1,42 @@
 package com.codeup.svcs;
 
+import com.codeup.models.Post;
+import com.codeup.Repositories.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.codeup.models.Post;
-
-@Service
+@Service ("postSvc")
 public class PostSvc {
+//Autowire an instance of X mean
+//    1. Add a private property of type X within the class Y
+//    2. Create/update the consturctor of the class Y where you added the property, to receive one more argument of type X
 
-    List<Post> posts = new ArrayList<>();
+    private PostRepository postsDao;
 
-    public PostSvc(){
-        createPosts();
+    @Autowired
+    public PostSvc(PostRepository postsDao) {
+
+        this.postsDao = postsDao;
     }
 
-    public List<Post> findAll(){
-        return posts;
+    public Iterable<Post> findAll() {
+
+        return postsDao.findAll();
     }
 
-    public Post findone(long id){
-        return posts.get((int)id - 1);
+    public Post findOne(long id) {
+
+        return postsDao.findOne(id);
     }
 
-    public Post save (Post post){
-        post.setId((long) posts.size() + 1);
-        posts.add(post);
+    public Post save(Post post) {
+        postsDao.save(post);
+
         return post;
     }
 
-    private void createPosts(){
-        save(new Post("radio", ""));
 
-    }
+
+
+
 }

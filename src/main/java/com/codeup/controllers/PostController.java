@@ -9,32 +9,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import com.codeup.svcs.PostSvc;
 
 @Controller
 public class PostController {
 
-//    private final com.codeup.svcs.PostSvc postSvc;
-//
-//    public PostController(com.codeup.svcs.PostSvc postSvc){
-//        this.postSvc = postSvc;
-//    }
+    private final PostSvc postSvc;
+
+    public PostController(PostSvc postSvc){
+        this.postSvc = postSvc;
+    }
 
     @GetMapping ("/post")
     public String viewall (Model model){
-        ArrayList<Post> posts = new ArrayList<>();
-
-        posts.add(new Post("Hello there!", ""));
-        posts.add(new Post("Anyone there?", ""));
+        Iterable<Post> posts = postSvc.findAll();
         model.addAttribute("posts", posts);
 
-        return "post/index";
+        return "posts/index";
     }
 
     @GetMapping ("post/{id}")
     public String viewIndividualPost (@PathVariable long id, Model model){
-        Post post = new Post("test post", "my first blog post");
+        Post post = postSvc.findOne(id);
+        model.addAttribute("post", post);
 
-        return "post/show";
+        return "posts/show";
     }
 
     @GetMapping("post/create")

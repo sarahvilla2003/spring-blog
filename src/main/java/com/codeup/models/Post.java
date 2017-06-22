@@ -16,7 +16,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name="ad_db")
+@Table(name="posts")
 public class Post {
 
     @Id
@@ -26,7 +26,7 @@ public class Post {
     @Column(nullable=false, length =100)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "text")
     private String body;
 
     public Post(String title, String body) {
