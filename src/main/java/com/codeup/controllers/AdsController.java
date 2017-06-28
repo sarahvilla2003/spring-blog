@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@Controller
 public class AdsController {
     private AdSvc adsDao;
 
@@ -32,10 +31,5 @@ public class AdsController {
         return "viewing ad #" + id;
     }
 
-    @GetMapping("/ads/create")
-    public String showFormToPublish(Model model) {
-        model.addAttribute("ad", new Ad());
-        return "ads/create";
-    }
 
 }

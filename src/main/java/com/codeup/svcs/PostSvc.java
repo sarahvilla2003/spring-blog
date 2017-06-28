@@ -35,8 +35,14 @@ public class PostSvc {
         return post;
     }
 
+     public void deletePost (long id){
+         Post post = this.findOne(id);
+         postsDao.delete(post);
+    }
+
+    }
 
 
 
 
-}
+

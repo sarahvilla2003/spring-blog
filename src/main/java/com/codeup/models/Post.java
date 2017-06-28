@@ -9,10 +9,13 @@ package com.codeup.models;
 //        return title
 //    }
 //}
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.javafx.beans.IDProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -24,14 +27,23 @@ public class Post {
     private long id;
 
     @Column(nullable=false, length =100)
+    @NotBlank(message = "Posts must have a title")
+    @Size(min = 3, message = "A title must be at least 3 characters.")
+
     private String title;
 
     @Column(nullable = false, columnDefinition = "text")
+    @NotBlank(message = "Posts must have a body")
     private String body;
 
-    public Post(String title, String body) {
+    @ManyToOne
+    @JsonManagedReference
+    private User owner;
+
+    public Post(String title, String body, User owner) {
         this.title = title;
         this.body = body;
+        this.owner=owner;
     }
 
     public Post(){
@@ -58,5 +70,13 @@ public class Post {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
